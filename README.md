@@ -6,6 +6,7 @@ Support is integrated for uploading backups to S3 using s3cmd.
 
 Each script has samples included, use '-h' or check the source.
 
+These are heavily inspired by [a previous collection of scripts](http://tech.superhappykittymeow.com/?p=296).
 
 ### elasticsearch-remove-old-indices.sh
 
