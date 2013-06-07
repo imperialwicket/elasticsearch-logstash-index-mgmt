@@ -23,7 +23,7 @@ Restore handles retrieving a backup file and restore script (from S3), and then 
 
 ## Cron
 
-Something like this might be helpful (formatted for an /etc/cron.d/ file):
+Something like this might be helpful, assuming you placed the scripts in the /opt/es/ directory (formatted for an /etc/cron.d/ file):
 
     00 7 * * * root /bin/bash /opt/es/elasticsearch-backup-index.sh -b "s3://es-bucket" -i "/opt/elasticsearch/data/elasticsearch/nodes/0/indices" -c "s3cmd put -c /path/to/.s3cfg"
     00 9 * * * root /bin/bash /opt/es/elasticsearch-remove-old-indices.sh -i 21
