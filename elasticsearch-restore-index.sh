@@ -93,7 +93,8 @@ do
       ;;
   esac
 done
-n S3 base path
+
+# We need an S3 base path
 if [ -z "$S3_BASE" ]; then
   ERROR="${ERROR}Please provide an s3 bucket and path with -b.\n"
 fi
