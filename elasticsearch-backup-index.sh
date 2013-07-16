@@ -202,12 +202,12 @@ fi
 curl -XPUT '$ELASTICSEARCH/$INDEX/' -d '$SETTINGS' > /dev/null 2>&1
 
 # Extract index files
-DOWNLOAD_DIR=`pwd`
+DOWNLOAD_DIR=\`pwd\`
 cd $INDEX_DIR
-if [ -f $DOWNLOAD_DIR/$INDEX.tgz ]; then
-  tar xzf $DOWNLOAD_DIR/$INDEX.tgz
+if [ -f \$DOWNLOAD_DIR/$INDEX.tgz ]; then
+  tar xzf \$DOWNLOAD_DIR/$INDEX.tgz
 else
-  echo "Unable to locate archive file $DOWNLOAD_DIR/$INDEX.tgz."
+  echo "Unable to locate archive file \$DOWNLOAD_DIR/$INDEX.tgz."
   exit 1
 fi
 
