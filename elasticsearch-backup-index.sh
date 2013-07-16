@@ -160,7 +160,7 @@ if [ -n "$DATE" ]; then
   YEARMONTH=${YEARMONTH:0:7}
 else
   INDEX=`date --date='yesterday' +"logstash-%Y.%m.%d"`
-  YEARMONTH=`date +"%Y-%m"`
+  YEARMONTH=`date --date='yesterday' +"%Y-%m"`
 fi
 S3_TARGET="$S3_BASE/$YEARMONTH"
 
