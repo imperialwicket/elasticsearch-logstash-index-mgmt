@@ -199,21 +199,22 @@ if [ -z "\$TEST" ]; then
   exit 1
 fi
 
-curl -XPUT '$ELASTICSEARCH/$INDEX/' -d '$SETTINGS' > /dev/null 2>&1
-
 # Extract index files
 DOWNLOAD_DIR=\`pwd\`
 cd $INDEX_DIR
 if [ -f \$DOWNLOAD_DIR/$INDEX.tgz ]; then
+  # If we have the archive, create the new index in ES
+  curl -XPUT '$ELASTICSEARCH/$INDEX/' -d '$SETTINGS' > /dev/null 2>&1
+  # Extract the archive in to the INDEX_DIR
   tar xzf \$DOWNLOAD_DIR/$INDEX.tgz
+  # Restart elasticsearch to allow it to open the new dir and file data
+  $RESTART
+  exit 0
 else
   echo "Unable to locate archive file \$DOWNLOAD_DIR/$INDEX.tgz."
   exit 1
 fi
 
-# restart elasticsearch to allow it to open the new dir and file data
-$RESTART
-exit 0
 EOF
 
 # Put archive and restore script in s3.
