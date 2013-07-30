@@ -8,6 +8,8 @@ Each script has samples included, use '-h' or check the source.
 
 These are heavily inspired by [a previous collection of scripts](http://tech.superhappykittymeow.com/?p=296).
 
+There is also a [Python script available ](https://logstash.jira.com/browse/LOGSTASH-211) that serves a very similar cleaning/deleting need, but it does not manage any restore behavior.
+
 ### elasticsearch-remove-old-indices.sh
 
 This script generically walks through the indices, sorts them lexicographically, and deletes anything older than the configured number of indices.
