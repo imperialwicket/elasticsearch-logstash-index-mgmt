@@ -14,6 +14,10 @@ These are heavily inspired by [a previous collection of scripts](http://tech.sup
 
 This script generically walks through the indices, sorts them lexicographically, and deletes anything older than the configured number of indices.
 
+### elasticsearch-close-old-indices.sh
+
+This script generically walks through the indices, sorts them lexicographically, and closes indices older than the configured number of indices.
+
 ### elasticsearch-backup-index.sh
 
 Backup handles making a backup and a restore script for a given index. The default is yesterday's index, or you can pass a specific date for backup. You can optionally keep the backup locally, and/or push it to s3. If you want to get tricky, you can override the s3cmd command, and you could have this script push the backups to a storage server on your network (or whatever you want, really).
