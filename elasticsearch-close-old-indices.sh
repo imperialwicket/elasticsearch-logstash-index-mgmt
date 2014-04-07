@@ -19,7 +19,7 @@ elasticsearch-close-old-indices.sh
 
 Compares the current list of indices to a configured value and closes any
 indices surpassing that value. Sort is lexicographical; the first n of a 'sort
--r' list are kept, all others are deleted.
+-r' list are kept, all others are closed.
 
 
 USAGE: ./elasticsearch-close-old-indices.sh [OPTIONS]
@@ -36,15 +36,15 @@ EXAMPLES:
   ./elasticsearch-close-old-indices.sh
 
     Connect to http://localhost:9200 and get a list of indices matching
-    'logstash'. Keep the top lexicographical 14 indices, delete any others.
+    'logstash'. Keep the top lexicographical 14 indices, close any others.
 
   ./elasticsearch-close-old-indices.sh -e "http://es.example.com:9200" \
   -i 28 -g my-logs -o /mnt/es/logfile.log
 
     Connect to http://es.example.com:9200 and get a list of indices matching
-    'my-logs'. Keep the top 28 indices, delete any others. When using a custom
+    'my-logs'. Keep the top 28 indices, close any others. When using a custom
     index naming scheme be sure that a 'sort -r' places the indices you want to
-    keep at the top of the list. Output index deletes to /mnt/es/logfile.log.
+    keep at the top of the list. Output index closes to /mnt/es/logfile.log.
 
 EOF
 }
@@ -107,16 +107,16 @@ if [ -n "$LOGFILE" ] && ! [ -e $LOGFILE ]; then
   touch $LOGFILE
 fi
 
-# Delete indices
+# Close indices
 declare -a INDEX=($INDICES_TEXT)
 if [ ${#INDEX[@]} -gt $KEEP ]; then
   for index in ${INDEX[@]:$KEEP};do
-    # We don't want to accidentally delete everything
+    # We don't want to accidentally close everything
     if [ -n "$index" ]; then
       if [ -z "$LOGFILE" ]; then
         curl -s -XPOST "$ELASTICSEARCH/$index/_close" > /dev/null
       else
-        echo `date "+[%Y-%m-%d %H:%M] "`" Deleting index: $index." >> $LOGFILE
+        echo `date "+[%Y-%m-%d %H:%M] "`" Closing index: $index." >> $LOGFILE
         curl -s -XPOST "$ELASTICSEARCH/$index/_close" >> $LOGFILE
       fi
     fi
