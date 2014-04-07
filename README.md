@@ -1,14 +1,14 @@
 ## Elasticsearch Logstash Index Management
 
-This is a collection of bash scripts for managing [Elasticsearch](http://www.elasticsearch.org) indices. They are specifically designed around the daily index pattern used in [Logstash](http://logstash.net).
+Please note that [Elasticsearch](http://github.com/elasticsearch) provides the python based [Curator](http://github.com/elasticsearch/curator) which manages closing/deleting and maintenance with lots of tuning capabilities. It is worth investigating Curator as an elasticsearch-maintained solution for your cluster's time-based index maintenance needs.
+
+If you prefer to roll your own, or need functionality that's not (yet) available in Curator, these scripts may serve as a good starting point. This collection of bash scripts for manages [Elasticsearch](http://www.elasticsearch.org) indices. They are specifically designed around the daily index pattern used in [Logstash](http://logstash.net).
 
 Support is integrated for uploading backups to S3 using s3cmd.
 
 Each script has samples included, use '-h' or check the source.
 
 These are heavily inspired by [a previous collection of scripts](http://tech.superhappykittymeow.com/?p=296).
-
-There is also a [Python script available ](https://logstash.jira.com/browse/LOGSTASH-211) that serves a very similar cleaning/deleting need, but it does not manage any restore behavior.
 
 ### elasticsearch-remove-old-indices.sh
 
