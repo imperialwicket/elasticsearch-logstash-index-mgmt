@@ -2,6 +2,8 @@
 
 Please note that [Elasticsearch](http://github.com/elasticsearch) provides the python based [Curator](http://github.com/elasticsearch/curator) which manages closing/deleting and maintenance with lots of tuning capabilities. It is worth investigating Curator as an elasticsearch-maintained solution for your cluster's time-based index maintenance needs.
 
+If you are using Curator with Elasticsearch >= 1.0.0 (and [Hubot](https://hubot.github.com/)) and you want a way to restore old indices, try [hubot-elk-restore](https://github.com/imperialwicket/hubot-elk-restore).
+
 If you prefer to roll your own, or need functionality that's not (yet) available in Curator, these scripts may serve as a good starting point. This collection of bash scripts for manages [Elasticsearch](http://www.elasticsearch.org) indices. They are specifically designed around the daily index pattern used in [Logstash](http://logstash.net).
 
 Support is integrated for uploading backups to S3 using s3cmd.
