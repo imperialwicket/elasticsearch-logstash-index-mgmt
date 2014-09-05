@@ -18,7 +18,9 @@ They are specifically designed around the daily index pattern used in
 
 Support is integrated for uploading backups to S3 using s3cmd.
 
-Each script has samples included, use '-h' or check the source.
+Each script has samples included, use '-h' or check the source. THe default
+index is 'logstash', but this option is configurable with '-g' for 'marvel' or
+custom index names.
 
 These are heavily inspired by [a previous collection of
 scripts](http://tech.superhappykittymeow.com/?p=296).
