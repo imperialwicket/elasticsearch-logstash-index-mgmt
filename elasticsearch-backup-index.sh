@@ -1,5 +1,5 @@
 #!/bin/bash
-# 
+#
 # elasticsearch-backup-index.sh
 #
 # Push logstash index from yesterday to s3 with an accompanying restore script.
@@ -7,9 +7,9 @@
 #   http://www.elasticsearch.org
 #   https://github.com/s3tools/s3cmd | http://s3tools.org/s3cmd
 #
-#   Inspiration: 
+#   Inspiration:
 #     http://tech.superhappykittymeow.com/?p=296
-# 
+#
 # Must run on an elasticsearch node, and expects to find the index on this node.
 
 usage()
@@ -20,8 +20,8 @@ elasticsearch-backup-index.sh
 
 Create a restorable backup of an elasticsearch index (assumes Logstash format
 indexes), and upload it to an existing S3 bucket. The default backs up an
-index from yesterday. Note that this script itself does not restart 
-elasticsearch - the restore script that is generated for each backup will 
+index from yesterday. Note that this script itself does not restart
+elasticsearch - the restore script that is generated for each backup will
 restart elasticsearch after restoring an archived index.
 
 USAGE: ./elasticsearch-backup-index.sh -b S3_BUCKET -i INDEX_DIRECTORY [OPTIONS]
@@ -44,7 +44,7 @@ EXAMPLES:
 
   ./elasticsearch-backup-index.sh -b "s3://someBucket" \
   -i "/usr/local/elasticsearch/data/node/0/indices"
- 
+
     This uses http://localhost:9200 to connect to elasticsearch and backs up
     the index from yesterday (based on system time, be careful with timezones)
 
@@ -54,7 +54,7 @@ EXAMPLES:
 
     Connect to elasticsearch using 127.0.0.1 instead of localhost, backup the
     index from 2013.05.21 instead of yesterday, use the s3cmd in /usr/local/bin
-    explicitly, store the archive and restore script in /mnt/es/backups (and 
+    explicitly, store the archive and restore script in /mnt/es/backups (and
     persist them) and use 'service es restart' to restart elastic search.
 
 EOF
@@ -136,7 +136,7 @@ do
   esac
 done
 
-# We need an S3 base path 
+# We need an S3 base path
 if [ -z "$S3_BASE" ]; then
   ERROR="${ERROR}Please provide an s3 bucket and path with -b.\n"
 fi
@@ -187,7 +187,7 @@ cd - > /dev/null
 # Create a restore script for elasticsearch
 cat << EOF >> $TMP_DIR/${INDEX}-restore.sh
 #!/bin/bash
-# 
+#
 # ${INDEX}-restore.sh - restores elasticsearch index: $INDEX to elasticsearch
 #   instance at $ELASTICSEARCH. This script expects to run in the same
 #   directory as the $INDEX.tgz file.
