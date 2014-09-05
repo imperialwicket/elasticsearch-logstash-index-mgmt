@@ -1,14 +1,14 @@
 #!/bin/bash
 # elasticsearch-remove-old-indices.sh
 #
-# Delete logstash format indices from elasticsearch maintaining only a 
+# Delete logstash format indices from elasticsearch maintaining only a
 # specified number.
 #   http://logstash.net
 #   http://www.elasticsearch.org
 #
-#   Inspiration: 
+#   Inspiration:
 #     http://tech.superhappykittymeow.com/?p=296
-# 
+#
 # Must have access to the specified elasticsearch node.
 
 usage()
@@ -17,7 +17,7 @@ cat << EOF
 
 elasticsearch-remove-old-indices.sh
 
-Compares the current list of indices to a configured value and deletes any 
+Compares the current list of indices to a configured value and deletes any
 indices surpassing that value. Sort is lexicographical; the first n of a 'sort
 -r' list are kept, all others are deleted.
 
@@ -33,7 +33,7 @@ OPTIONS:
 
 EXAMPLES:
 
-  ./elasticsearch-remove-old-indices.sh 
+  ./elasticsearch-remove-old-indices.sh
 
     Connect to http://localhost:9200 and get a list of indices matching
     'logstash'. Keep the top lexicographical 14 indices, delete any others.

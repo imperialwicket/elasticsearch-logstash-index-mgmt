@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 #
 # elasticsearch-restore-index.sh
 #
@@ -8,10 +8,10 @@
 #   http://www.elasticsearch.org
 #   https://github.com/s3tools/s3cmd | http://s3tools.org/s3cmd
 #
-#   Inspiration: 
+#   Inspiration:
 #     http://tech.superhappykittymeow.com/?p=296
-# 
-# Must run on an elasticsearch node with data, the restore script restarts 
+#
+# Must run on an elasticsearch node with data, the restore script restarts
 # elasticsearch.
 
 usage()
