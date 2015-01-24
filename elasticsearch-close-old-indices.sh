@@ -116,8 +116,10 @@ if [ ${#INDEX[@]} -gt $KEEP ]; then
       if [ -z "$LOGFILE" ]; then
         curl -s -XPOST "$ELASTICSEARCH/$index/_close" > /dev/null
       else
-        echo `date "+[%Y-%m-%d %H:%M] "`" Closing index: $index." >> $LOGFILE
+        echo -n `date "+[%Y-%m-%d %H:%M] "`" Closing index: $index." >> $LOGFILE
+        curl -s -XPOST "$ELASTICSEARCH/$index/_flush" >> $LOGFILE
         curl -s -XPOST "$ELASTICSEARCH/$index/_close" >> $LOGFILE
+        echo "." >> $LOGFILE
       fi
     fi
   done
