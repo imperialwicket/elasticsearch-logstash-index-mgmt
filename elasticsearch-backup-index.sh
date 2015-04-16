@@ -29,6 +29,7 @@ USAGE: ./elasticsearch-backup-index.sh -b S3_BUCKET -i INDEX_DIRECTORY [OPTIONS]
 OPTIONS:
   -h    Show this message
   -b    S3 path for backups (Required)
+  -g    Consistent index name (default: logstash)
   -i    Elasticsearch index directory (Required)
   -d    Backup a specific date (format: YYYY.mm.dd)
   -c    Command for s3cmd (default: s3cmd put)
@@ -50,10 +51,10 @@ EXAMPLES:
 
   ./elasticsearch-backup-index.sh -b "s3://bucket" -i "/mnt/es/data/node/0/indices" \
   -d "2013.05.21" -c "/usr/local/bin/s3cmd put" -t "/mnt/es/backups" \
-  -u "service es restart" -e "http://127.0.0.1:9200" -p
+  -g my_index -u "service es restart" -e "http://127.0.0.1:9200" -p
 
     Connect to elasticsearch using 127.0.0.1 instead of localhost, backup the
-    index from 2013.05.21 instead of yesterday, use the s3cmd in /usr/local/bin
+    index "my_index" from 2013.05.21 instead of yesterday, use the s3cmd in /usr/local/bin
     explicitly, store the archive and restore script in /mnt/es/backups (and
     persist them) and use 'service es restart' to restart elastic search.
 
@@ -78,7 +79,7 @@ RESTART="service elasticsearch restart"
 # Validate shard/replica values
 RE_D="^[0-9]+$"
 
-while getopts ":b:i:d:c:t:ps:r:e:n:u:h" flag
+while getopts ":b:i:d:c:g:t:p:s:r:e:n:u:h" flag
 do
   case "$flag" in
     h)
@@ -96,6 +97,9 @@ do
       ;;
     c)
       S3CMD=$OPTARG
+      ;;
+    g)
+      INAME=$OPTARG
       ;;
     t)
       TMP_DIR=$OPTARG
@@ -153,13 +157,17 @@ if [ -n "$ERROR" ]; then
   exit 1
 fi
 
+if [ -z "$INAME" ]; then
+  INAME="logstash"
+fi
+
 # Default logstash index naming is hardcoded, as are YYYY-mm container directories.
 if [ -n "$DATE" ]; then
-  INDEX="logstash-$DATE"
+  INDEX="$INAME-$DATE"
   YEARMONTH=${DATE//\./-}
   YEARMONTH=${YEARMONTH:0:7}
 else
-  INDEX=`date --date='yesterday' +"logstash-%Y.%m.%d"`
+  INDEX=`date --date='yesterday' +"$INAME-%Y.%m.%d"`
   YEARMONTH=`date --date='yesterday' +"%Y-%m"`
 fi
 S3_TARGET="$S3_BASE/$YEARMONTH"
