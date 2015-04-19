@@ -65,9 +65,9 @@ Alternatively @sergedu provided a sample cron script `es-backup-index.sh`.
 
 The es-backup-index script is ready for use, and assuming your setup is consistent, these instructions (included in the script itself) should be enough to get started:
 
-''''
+````
 # This is a wrapper script for daily run
 # i.e. you can run it by cron as follows
 ## m h  dom mon dow   command
 #  11 4 * * * /opt/es/es-backup-index.sh >> /var/log/elasticsearch/esindexbackup.log 
-''''
+````
