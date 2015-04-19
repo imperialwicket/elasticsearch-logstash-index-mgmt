@@ -51,13 +51,17 @@ executing the restore script locally after download.
 
 ## Cron
 
+### Manual
+
 Something like this might be helpful, assuming you placed the scripts in the
 /opt/es/ directory (formatted for an /etc/cron.d/ file):
 
     00 7 * * * root /bin/bash /opt/es/elasticsearch-backup-index.sh -b "s3://es-bucket" -i "/opt/elasticsearch/data/elasticsearch/nodes/0/indices" -c "s3cmd put -c /path/to/.s3cfg"
     00 9 * * * root /bin/bash /opt/es/elasticsearch-remove-old-indices.sh -i 21
 
-# Alternatively, @sergedu provided a sample cron script 'es-backup-index.sh'
+### `es-backup-index.sh`
+
+Alternatively @sergedu provided a sample cron script `es-backup-index.sh`.
 
 The es-backup-index script is ready for use, and assuming your setup is consistent, these instructions (included in the script itself) should be enough to get started:
 
