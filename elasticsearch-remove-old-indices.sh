@@ -95,7 +95,7 @@ if [ -n "$ERROR" ]; then
 fi
 
 # Get the indices from elasticsearch
-INDICES_TEXT=`curl -s "$ELASTICSEARCH/_status?pretty=true" | grep $GREP | grep -v \"index\" | sort -r | awk -F\" {'print $2'}`
+INDICES_TEXT=`curl -s "$ELASTICSEARCH/_stats?pretty=true" | grep $GREP | grep -v \"index\" | sort -r | awk -F\" {'print $2'}`
 
 if [ -z "$INDICES_TEXT" ]; then
   echo "No indices returned containing '$GREP' from $ELASTICSEARCH."
