@@ -53,6 +53,7 @@ EOF
 ELASTICSEARCH="http://localhost:9200"
 KEEP=14
 GREP="logstash"
+LOGFILE=/dev/null
 
 # Validate numeric values
 RE_D="^[0-9]+$"
@@ -103,9 +104,7 @@ if [ -z "$INDICES_TEXT" ]; then
 fi
 
 # If we are logging, make sure we have a logfile TODO - handle errors here
-if [ -n "$LOGFILE" ] && ! [ -e $LOGFILE ]; then
-  touch $LOGFILE
-fi
+touch $LOGFILE
 
 # Close indices
 declare -a INDEX=($INDICES_TEXT)
@@ -113,14 +112,10 @@ if [ ${#INDEX[@]} -gt $KEEP ]; then
   for index in ${INDEX[@]:$KEEP};do
     # We don't want to accidentally close everything
     if [ -n "$index" ]; then
-      if [ -z "$LOGFILE" ]; then
-        curl -s -XPOST "$ELASTICSEARCH/$index/_close" > /dev/null
-      else
-        echo -n `date "+[%Y-%m-%d %H:%M] "`" Closing index: $index." >> $LOGFILE
-        curl -s -XPOST "$ELASTICSEARCH/$index/_flush" >> $LOGFILE
-        curl -s -XPOST "$ELASTICSEARCH/$index/_close" >> $LOGFILE
-        echo "." >> $LOGFILE
-      fi
+      echo -n `date "+[%Y-%m-%d %H:%M] "`" Closing index: $index." >> $LOGFILE
+      curl -s -XPOST "$ELASTICSEARCH/$index/_flush" >> $LOGFILE
+      curl -s -XPOST "$ELASTICSEARCH/$index/_close" >> $LOGFILE
+      echo "." >> $LOGFILE
     fi
   done
 fi
