@@ -30,6 +30,11 @@ scripts](http://tech.superhappykittymeow.com/?p=296).
 This script generically walks through the indices, sorts them lexicographically,
 and deletes anything older than the configured number of indices.
 
+### elasticsearch-remove-expired-indices.sh
+
+This script generically walks through the indices, and deletes anything older
+than the configured expiration date.
+
 ### elasticsearch-close-old-indices.sh
 
 This script generically walks through the indices, sorts them lexicographically,
