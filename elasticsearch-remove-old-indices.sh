@@ -53,6 +53,7 @@ EOF
 ELASTICSEARCH="http://localhost:9200"
 KEEP=14
 GREP="logstash"
+LOGFILE=/dev/null
 
 # Validate numeric values
 RE_D="^[0-9]+$"
@@ -103,9 +104,7 @@ if [ -z "$INDICES_TEXT" ]; then
 fi
 
 # If we are logging, make sure we have a logfile TODO - handle errors here
-if [ -n "$LOGFILE" ] && ! [ -e $LOGFILE ]; then
-  touch $LOGFILE
-fi
+touch $LOGFILE
 
 # Delete indices
 declare -a INDEX=($INDICES_TEXT)
@@ -113,12 +112,8 @@ if [ ${#INDEX[@]} -gt $KEEP ]; then
   for index in ${INDEX[@]:$KEEP};do
     # We don't want to accidentally delete everything
     if [ -n "$index" ]; then
-      if [ -z "$LOGFILE" ]; then
-        curl -s -XDELETE "$ELASTICSEARCH/$index/" > /dev/null
-      else
-        echo `date "+[%Y-%m-%d %H:%M] "`" Deleting index: $index." >> $LOGFILE
-        curl -s -XDELETE "$ELASTICSEARCH/$index/" >> $LOGFILE
-      fi
+      echo `date "+[%Y-%m-%d %H:%M] "`" Deleting index: $index." >> $LOGFILE
+      curl -s -XDELETE "$ELASTICSEARCH/$index/" >> $LOGFILE
     fi
   done
 fi
